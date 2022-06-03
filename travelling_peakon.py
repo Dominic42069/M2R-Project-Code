@@ -8,17 +8,18 @@ from time import perf_counter
 
 sample_number = 10000 # number of x values to sample u_func
 x_range = np.linspace(-100, 100, sample_number) # x values u_func is sampled out
-t_max = 200 # max t value to sample u_func
+t_max = 100 # max t value to sample u_func
 delta_t = 0.025 # timestep to advance u_func by each iteration
 
 ### PEAKON PROPERTIES
 
 peakon_number = 2 # number of peaks
 c_range = np.array([0, 5]) # speed of each peak
-m_range = np.array([1, 1]) # height of each peak
-offset = np.array([0, -50]) # peak starting location
+m_range = np.array([1, 2]) # height of each peak
+offset = np.array([0, -75]) # peak starting location
+spread = 5 # width of each peak
 
-u_func = lambda x, t: np.sum(m_range[:,None] * np.exp(-np.abs(x[None,:]-c_range[:,None]*t - offset[:,None])),axis=0)
+u_func = lambda x, t: np.sum(m_range[:,None] * np.exp(-np.abs((x[None,:] - offset[:,None])/spread - c_range[:,None]*t)),axis=0)
 
 ### PLOTTING ZONE
 
