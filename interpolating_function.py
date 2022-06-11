@@ -59,7 +59,7 @@ plt.ion()
 plt.show()
 
 ax.plot(x_range, init_u_vec)
-plt.pause(1)
+plt.pause(0.0000000000000000000000000000001)
 
 ### CREATE FINITE DIFFERENCE MATRICES
 
@@ -112,7 +112,8 @@ while t < T:
     )  # STEP 5 (also maybe broken)
     ax.plot(x_range, u_interp(x_range, t))
     plt.title(f"t={t}")
-    plt.pause(0.0001)
+    plt.pause(0.000000000000000000001)
     t += delta_t
+    current_u_vec = next_u_vec
 
 sys.exit(0)
