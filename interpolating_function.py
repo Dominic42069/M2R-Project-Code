@@ -22,8 +22,8 @@ T = 10  # maximum time value
 l = 10000  # number of time steps
 delta_t = T / l  # length of time steps
 n = 2 ** 14  # term number in sequence
-sample_number = 25000  # number of x values
-a = 40  # x is on interval [0,a]
+sample_number = 250  # number of x values
+a = 1  # x is on interval [0,a]
 kappa = 0.001  # kappa in the equation
 delta_x = a / sample_number  # length between sample points in space
 c = 1 / (1 + 2 * n ** 2 * (1 - np.exp(-kappa)))
@@ -35,6 +35,7 @@ x_range = np.linspace(0, a, sample_number)
 ### INITIAL PROFILE
 
 u0 = lambda x: c * (np.cosh(np.minimum(x, a - x) - a / 2) / (np.sinh(a / 2)))
+#u0 = lambda x: 0*x
 
 g = np.array(
     [
