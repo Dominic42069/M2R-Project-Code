@@ -1,41 +1,33 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from time import perf_counter
-
-# t0 = perf_counter()
+import sys
 
 ### NUMERICAL PROPERTIES
 
 sample_number = 10000 # number of x values to sample u_func
-x_range = np.linspace(-100, 100, sample_number) # x values u_func is sampled out
-t_max = 100 # max t value to sample u_func
-delta_t = 0.025 # timestep to advance u_func by each iteration
+x_range = np.linspace(0, 200, sample_number) # x values u_func is sampled out
+t_max = 200 # max t value to sample u_func
+delta_t = 2 # timestep to advance u_func by each iteration
 
 ### PEAKON PROPERTIES
 
 peakon_number = 2 # number of peaks
-c_range = np.array([0, 5]) # speed of each peak
-m_range = np.array([1, 2]) # height of each peak
-offset = np.array([0, -75]) # peak starting location
-spread = 5 # width of each peak
+c_range = 5*np.array([1, 3]) # speed of each peak
+offset = np.array([5, 5]) # peak starting location.
 
-u_func = lambda x, t: np.sum(m_range[:,None] * np.exp(-np.abs((x[None,:] - offset[:,None])/spread - c_range[:,None]*t)),axis=0)
+u_func = lambda x, t: np.sum(1/25 * c_range[:,None] * np.exp(-np.abs((x[None,:]-c_range[:,None]*t) % 200 - offset[:,None])),axis=0)
 
 ### PLOTTING ZONE
 
 f, ax = plt.subplots(1)
 
-plt.ion()
-plt.show()
-
 t=0
 
 while t <= t_max:
-    plt.cla()
-    u_vec = u_func(x_range, t)
+    u_vec = u_func(x_range, t) + 0.1*t
     ax.plot(x_range, u_vec)
-    plt.ylim([0,2.5]) # set slightly higher than largest u value
-    # t1 = perf_counter()
-    # plt.title(f"{(t/delta_t)/(t1-t0)} fps")
+    plt.ylim([0,10]) # set slightly higher than largest u value
     plt.pause(0.000000000000000000000000000000001)
     t += delta_t
+
+plt.show()
