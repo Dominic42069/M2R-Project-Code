@@ -29,13 +29,13 @@ delta_x = a / sample_number  # length between sample points in space
 c = 1 / (1 + 2 * n ** 2 * (1 - np.exp(-kappa)))
 h = 2 ** (-40)
 
-t_range = np.linspace(0, T, l+1)
+t_range = np.linspace(0, T, l + 1)
 x_range = np.linspace(0, a, sample_number)
 
 ### INITIAL PROFILE
 
 u0 = lambda x: c * (np.cosh(np.minimum(x, a - x) - a / 2) / (np.sinh(a / 2)))
-#u0 = lambda x: 0*x
+# u0 = lambda x: 0*x
 
 g = np.array(
     [
@@ -88,7 +88,7 @@ while t < T:
     current_m_vec = current_u_vec - np.matmul(sec_deriv_mat, current_u_vec)  # STEP 2
     next_m_vec = current_m_vec + delta_t * (  # STEP 3
         -np.matmul(bwd_deriv_mat, current_m_vec * current_u_vec)
-        - current_m_vec*np.matmul(D_mat, current_u_vec)
+        - current_m_vec * np.matmul(D_mat, current_u_vec)
     )
     next_u_vec = (h * ifft(a * fft(g) * fft(next_m_vec))).real  # STEP 4 (may be broken)
     u_interp = (
